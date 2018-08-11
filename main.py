@@ -68,12 +68,15 @@ def index_handle():
 
 @app.route("/cart.html")
 def cart_handle():
-    in_cart = loads(list(request.cookies.keys())[0])
-    in_cart_new = {}
-    for key in in_cart.keys():
-        in_cart_new[int(key)] = in_cart[key]
-    in_cart = in_cart_new
-    print(in_cart)
+    in_cart = {}
+    try:
+        in_cart = loads(list(request.cookies.keys())[0])
+        in_cart_new = {}
+        for key in in_cart.keys():
+            in_cart_new[int(key)] = in_cart[key]
+        in_cart = in_cart_new
+    except Exception as _:
+        pass
     
     return render_template("cart.html",
         in_cart_dishes=in_cart,

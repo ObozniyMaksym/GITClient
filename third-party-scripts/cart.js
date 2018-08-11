@@ -39,7 +39,6 @@ var update_dropdown = function()
 
     var summary = 0.0
 
-    console.log(Object.keys(cookie))
     Object.keys(cookie).forEach(function(key) {
         dropdown.innerHTML +=
         `
