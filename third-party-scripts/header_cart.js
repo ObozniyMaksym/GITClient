@@ -33,7 +33,12 @@ var add_to_cart = function(dish_id)
 
 var update_dropdown = function()
 {
-    cookie = JSON.parse(document.cookie);
+    var cookie = {}
+    try {
+        cookie = JSON.parse(document.cookie);   
+    } catch (err) {
+        null   
+    }
     dropdown = document.getElementById("cart-dropdown-main");
     dropdown.innerHTML = "";
 
@@ -53,7 +58,7 @@ var update_dropdown = function()
 				</a>
 
                 <span class="header-cart-item-info">
-                    ${cookie[key]} x $${dishes_list[key].cost}
+                    ${cookie[key]} x ₴${dishes_list[key].cost}
                 </span>
 			</div>
 		</li>
@@ -62,10 +67,10 @@ var update_dropdown = function()
         summary += dishes_list[key].cost * cookie[key]
     });
 
-    document.getElementById("cart-dropdown-summary").innerHTML = "₴" + summary.toFixed(2)
+    document.getElementById("cart-dropdown-summary").innerHTML = "Итог: ₴" + summary.toFixed(2)
     document.getElementById("cart-size").innerHTML = Object.keys(cookie).length
 }
 
-window.onload = () => {
+window.onload = function() {
     update_dropdown();
 }
