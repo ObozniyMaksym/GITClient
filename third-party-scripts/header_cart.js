@@ -27,8 +27,20 @@ var add_to_cart = function(dish_id)
     }
 
     document.cookie = JSON.stringify(cookie)
-
     update_dropdown()
+}
+
+var delete_from_cart = function(dish_id)
+{
+    try {
+        cookie = JSON.parse(document.cookie);
+    } catch (err) {
+        return;
+    }
+
+    delete cookie[dish_id];
+    document.cookie = JSON.stringify(cookie)
+    update_dropdown();
 }
 
 var update_dropdown = function()
@@ -44,12 +56,17 @@ var update_dropdown = function()
 
     var summary = 0.0
 
+    if(Object.keys(cookie).length == 0)
+    {
+        dropdown.innerHTML += "Ваша корзина пустая";
+    }
+
     Object.keys(cookie).forEach(function(key) {
         dropdown.innerHTML +=
         `
         <li class="header-cart-item">
-			<div class="header-cart-item-img">
-				<img src="http://api.torianik.online:5000${dishes_list[key].url}" alt="IMG">
+            <div class="header-cart-item-img" onclick="delete_from_cart(${key})">
+				<img src="http://localhost:5000${dishes_list[key].url}" alt="IMG">
 			</div>
 
 			<div class="header-cart-item-txt">

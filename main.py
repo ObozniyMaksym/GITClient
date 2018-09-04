@@ -1,6 +1,7 @@
 from flask import render_template, Flask, send_from_directory, request, make_response, Markup
 import os
 from json import dumps, loads
+from math import ceil
 
 app = Flask(__name__)
 
@@ -42,7 +43,17 @@ dishes_list = {
     7: { "title": "Картошка по селянски", "cost": 79.99, "url": "/public/potato_1.png", "tags":["snacks"]},
     8: { "title": "Картошка жареная", "cost": 19.99, "url": "/public/potato_2.png", "tags":["snacks"]},
     9: { "title": "Сосики охотничьи", "cost": 24.99, "url": "/public/sousages.png", "tags":["snacks"]},
-    10: { "title": "Лаваш", "cost": 49.99, "url": "/public/lavash.png", "tags":["snacks"]}
+    10: { "title": "Лаваш", "cost": 49.99, "url": "/public/lavash.png", "tags":["snacks"]},
+    11: { "title": "Борщ", "cost": 49.99, "url": "/public/tomato_soup.png", "tags":["first course"] },
+    12: { "title": "Суп", "cost": 14.99, "url": "/public/soup.png", "tags": ["first course"] },
+    13: { "title": "Харчо", "cost": 99.99, "url": "/public/harcho.png", "tags":["first course"] },
+    14: { "title": "Солянка", "cost": 124.99, "url": "/public/solianka.png", "tags":["first course"] },
+    15: { "title": "Рассольник", "cost": 30.00, "url": "/public/rassolnik.png", "tags":["first course"] },
+    16: { "title": "Сухари", "cost": 69.99, "url": "/public/suhari.png", "tags":["snacks"]},
+    17: { "title": "Картошка по селянски", "cost": 79.99, "url": "/public/potato_1.png", "tags":["snacks"]},
+    18: { "title": "Картошка жареная", "cost": 19.99, "url": "/public/potato_2.png", "tags":["snacks"]},
+    19: { "title": "Сосики охотничьи", "cost": 24.99, "url": "/public/sousages.png", "tags":["snacks"]},
+    20: { "title": "Лаваш", "cost": 49.99, "url": "/public/lavash.png", "tags":["snacks"]}
 }
 
 dish_blocks = [
@@ -94,8 +105,27 @@ def cart_handle():
 
 @app.route("/product.html")
 def product_handle():
+    try:
+        page = int(request.args.get("page"))
+    except Exception as _:
+        page = 1
+
+    dish_page = []
+    DISH_PER_PAGE = 15
+
+    start_page = (page - 1) * DISH_PER_PAGE
+    i = 1
+    while i <= DISH_PER_PAGE and i + start_page <= len(dishes_list):
+        new_dish = dishes_list[i]
+        new_dish["id"] = i
+        dish_page.append(new_dish)
+        i += 1
+
     return render_template("product.html",
         header=header_html,
-        footer=footer_html)
+        footer=footer_html,
+        dish_page=dish_page,
+        current_page=page,
+        page_number=ceil(len(dishes_list) / DISH_PER_PAGE))
 
 app.run(host="0.0.0.0", port=80, debug=True)
