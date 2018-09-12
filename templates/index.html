@@ -201,24 +201,24 @@
 	</section>
 
 	<!-- New Product -->
-	{% for dish_block in dish_blocks %}
-	<p><a name= {{dish_block.label}} ></a></p>
+	<p><a name="Привет" ></a></p>
 	<section class="newproduct bgwhite p-t-45 p-b-1	05">
 		<div class="container">
 			<div class="sec-title p-b-60">
 				<h3 class="m-text5 t-center">
-					{{dish_block.title}}
+					Избранное
 				</h3>
 			</div>
 			<!-- Slide2 -->
 			<div class="wrap-slick2">
 				<div class="slick2">
-					{% for dish in dish_block.dishes %}
+
+					{% for dish in favorites %}
 					<div class="item-slick2 p-l-15 p-r-15">
 						<!-- Block2 -->
 						<div class="block2">
 							<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-								<img src="http://localhost:5000{{dishes_list[dish].url}}" alt="IMG-PRODUCT">
+								<img src="{{api_url}}{{dishes_list[dish].url}}" alt="IMG-PRODUCT">
 
 								<div class="block2-overlay trans-0-4">
 									<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
@@ -247,11 +247,11 @@
 						</div>
 					</div>
 					{% endfor %}
+
 				</div>
 			</div>
 		</div>
 	</section>
-	{% endfor %}
 
 	<!-- Banner2 -->
 	<section class="banner2 bg5 p-t-55 p-b-55">

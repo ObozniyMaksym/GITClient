@@ -1,3 +1,5 @@
+API_URL = "http://api.torianik.online:5000"
+
 dishes_list = {
     1: { "title": "Борщ", "cost": 49.99, "url": "/public/tomato_soup.png" },
     2: { "title": "Суп", "cost": 14.99, "url": "/public/soup.png"},
@@ -66,7 +68,7 @@ var update_dropdown = function()
         `
         <li class="header-cart-item">
             <div class="header-cart-item-img" onclick="delete_from_cart(${key})">
-				<img src="http://localhost:5000${dishes_list[key].url}" alt="IMG">
+				<img src="${API_URL}${dishes_list[key].url}" alt="IMG">
 			</div>
 
 			<div class="header-cart-item-txt">

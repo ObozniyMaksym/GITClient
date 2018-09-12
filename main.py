@@ -3,6 +3,10 @@ import os
 from json import dumps, loads
 from math import ceil
 
+
+# ========= CONFIG ========= #
+API_URL = "http://api.torianik.online:5000"
+
 app = Flask(__name__)
 
 @app.route("/vendor/<path:p>")
@@ -69,6 +73,8 @@ dish_blocks = [
     },
 ]
 
+favorites = [1, 2, 3, 4, 5]
+
 with open("templates/components/header.html") as fin:
     header_html = Markup(fin.read())
 
@@ -78,8 +84,9 @@ with open("templates/components/footer.html") as fin:
 @app.route("/index.html")
 def index_handle():
     dishes_list_json=dumps(dishes_list)
-    return render_template("index.html", 
-        dish_blocks=dish_blocks, 
+    return render_template("index.html",
+        api_url=API_URL,
+        favorites=favorites,
         dishes_list=dishes_list, 
         dishes_list_json=dishes_list_json,
         header=header_html,
@@ -98,6 +105,7 @@ def cart_handle():
         pass
     
     return render_template("cart.html",
+        api_url=API_URL,
         in_cart_dishes=in_cart,
         dishes_list=dishes_list,
         header=header_html,
@@ -122,6 +130,7 @@ def product_handle():
         i += 1
 
     return render_template("product.html",
+        api_url=API_URL,
         header=header_html,
         footer=footer_html,
         dish_page=dish_page,
